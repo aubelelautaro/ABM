@@ -1,0 +1,112 @@
+void listadoEmpleadoPorSector (eEmpleado empleados[], eSector sectores[], int cantEmp, int cantSector)
+{
+    int i, j;
+
+    printf("\n****** LISTADO DE EMPLEADOS ******\n\n");
+
+
+  for( i = 0; i < cantSector; i++)
+  {
+        for( j = 0; j<cantEmp; j++ ) // recorro los empleados
+        {
+
+         if( empleados[j].isEmpty == 0 && sectores[i].id == empleados[j].sectorId )  // busco la interseccion
+         {
+			printf("%d %s %s", empleados[j].legajo, empleados[j].nombre, sectores[i].descripcion );
+         }
+        } //Cierre 2do for
+  } // cierre 1er for
+}
+
+
+//
+
+void listadoMenuPorEmpleado ( eEmpleado empleados[], eMenu menues[], eAlmuerzo almuerzos[], int cantEmp, int cantMenu )
+{
+    int i, j, k;
+
+    printf("\n****** LISTADO DE MENU POR EMPLEADOS ******\n\n");
+
+
+  for( i = 0; i < cantMenu; i++)
+  {
+        for( j = 0; j < (cantEmp * cantMenu); j++ ) // recorro los almuerzos
+        {
+         if( menues[i].id == almuerzos[j].menuId )  // busco la interseccion
+         {
+			for( k = 0; k < cantEmp; k++ ){ // recorro los empleados
+				if( empleados[k].isEmpty == 0 && almuerzos[j].empleadoLegajo == empleados[k].legajo ){
+					printf("%d %s %s", empleados[k].legajo, empleados[k].nombre, menues[i].descripcion );
+				}
+				
+			}
+         }
+        } //Cierre 2do for
+  } // cierre 1er for
+
+}
+
+
+float masBarato(producto lista[], int tam)
+{
+    int i;
+    float masBarato = -1;
+
+	for (i=0;i<tam;i++)
+	{
+	  if(lista[i].estado == 1)
+	    {
+	     masbarato = lista[i].precio;
+	     brea;
+	    }
+	
+	}
+	
+	if (masbarato == -1) //si se cumple no existen productos activos en el array
+	{
+	  masbarato = -1;
+	}
+
+
+	for(i=0; i<tam;i++)
+	{
+		if(masbarato > lista[i].precio && lista[i].estado == 1)
+		{
+		 preciomasbarato = lista[i].precio;
+		}
+	}
+	return masbarato;
+}
+
+float promedioPrecio(producto lista[],int tam)
+{
+    int i;
+    float preciototal = 0;
+    int productosactivos =0;
+    int preciopromedio = -1;
+	for (i=0;i<tam;i++)
+	{
+	  if(lista[i].estado == 1)
+	    {
+	     preciototal = preciototal + lista[i].precio;
+	     productosactivos++;
+	    }
+	
+	}
+	
+	if (productosactivos == 0) //si se cumple no existen productos activos en el array
+	{
+	  preciopromedio = -1;
+	}else
+	{
+	 preciopromedio = (preciototal / (float)productosactivos);	
+	}
+
+	return preciopromedio;
+}
+
+
+
+
+
+

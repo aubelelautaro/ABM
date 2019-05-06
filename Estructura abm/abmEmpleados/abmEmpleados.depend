@@ -1,0 +1,81 @@
+# depslib dependency file v1.0
+1555341117 source:c:\users\alumno\desktop\abmempleados\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+
+1555946648 source:c:\users\alumno\downloads\clase-a-clase-master\clase-a-clase-master\estructura abm\abmempleados\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+
+1556080134 source:c:\users\usuario\desktop\clase-a-clase-master\estructura abm\abmempleados\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"funciones.h"
+
+1556055904 source:c:\users\usuario\desktop\clase-a-clase-master\estructura abm\abmempleados\funciones.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"funciones.h"
+
+1556049889 c:\users\usuario\desktop\clase-a-clase-master\estructura abm\abmempleados\funciones.h
+
+1556117922 source:c:\users\alumno\desktop\estructura abm\abmempleados\empleados.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"funciones.h"
+	"empleados.h"
+
+1556107597 c:\users\alumno\desktop\estructura abm\abmempleados\funciones.h
+
+1556118894 c:\users\alumno\desktop\estructura abm\abmempleados\empleados.h
+
+1556107545 source:c:\users\alumno\desktop\estructura abm\abmempleados\funciones.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"funciones.h"
+
+1556119267 source:c:\users\alumno\desktop\estructura abm\abmempleados\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"funciones.h"
+	"empleados.h"
+
+1557109153 source:c:\users\laucha\desktop\estructura abm\abmempleados\funciones.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	"funciones.h"
+
+1557107456 c:\users\laucha\desktop\estructura abm\abmempleados\funciones.h
+
+1557109114 source:c:\users\laucha\desktop\estructura abm\abmempleados\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"funciones.h"
+	"empleados.h"
+
+1557109076 c:\users\laucha\desktop\estructura abm\abmempleados\empleados.h
+
+1557100619 source:c:\users\laucha\desktop\estructura abm\abmempleados\empleados.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"funciones.h"
+	"empleados.h"
+

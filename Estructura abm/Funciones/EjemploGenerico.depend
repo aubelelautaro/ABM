@@ -1,0 +1,87 @@
+# depslib dependency file v1.0
+1524861917 source:c:\test\scarafilo\ejemplogenerico\estructuragenerica.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"EstructuraGenerica.h"
+
+1524860804 c:\test\scarafilo\ejemplogenerico\estructuragenerica.h
+
+1524861554 source:c:\test\scarafilo\ejemplogenerico\main.c
+	<stdio.h>
+	<stdlib.h>
+	"EstructuraGenerica.h"
+
+1525348529 source:d:\yo\amb-estructuragenerica\main.c
+	<stdio.h>
+	<stdlib.h>
+	"EstructuraGenerica.h"
+
+1525348529 d:\yo\amb-estructuragenerica\estructuragenerica.h
+
+1525348529 source:d:\yo\amb-estructuragenerica\estructuragenerica.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"EstructuraGenerica.h"
+
+1525447187 source:d:\yo\amb-estructuragenerica - copia\estructuragenerica.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"EstructuraGenerica.h"
+
+1525446201 d:\yo\amb-estructuragenerica - copia\estructuragenerica.h
+
+1525447168 source:d:\yo\amb-estructuragenerica - copia\main.c
+	<stdio.h>
+	<stdlib.h>
+	"EstructuraGenerica.h"
+
+1525565123 source:d:\usuarios\franco\downloads\lab1-master\lab1-master\clase 9\amb-estructuragenerica - copia\main.c
+	<stdio.h>
+	<stdlib.h>
+	"EstructuraGenerica.h"
+
+1525565430 d:\usuarios\franco\downloads\lab1-master\lab1-master\clase 9\amb-estructuragenerica - copia\estructuragenerica.h
+
+1525569975 source:d:\usuarios\franco\downloads\lab1-master\lab1-master\clase 9\amb-estructuragenerica - copia\estructuragenerica.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"EstructuraGenerica.h"
+
+1525939224 source:c:\users\franco\downloads\lab1-master\lab1-master\clase 9\amb-estructuragenerica - copia\estructuragenerica.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"EstructuraGenerica.h"
+
+1525938384 c:\users\franco\downloads\lab1-master\lab1-master\clase 9\amb-estructuragenerica - copia\estructuragenerica.h
+
+1525938687 source:c:\users\franco\downloads\lab1-master\lab1-master\clase 9\amb-estructuragenerica - copia\main.c
+	<stdio.h>
+	<stdlib.h>
+	"EstructuraGenerica.h"
+
+1557100619 source:c:\users\laucha\desktop\funciones\estructuragenerica.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"EstructuraGenerica.h"
+
+1557100619 c:\users\laucha\desktop\funciones\estructuragenerica.h
+
+1525946652 source:c:\users\laucha\desktop\funciones\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Funcionespp.h"
+	"productos.h"
+
+1525948998 c:\users\laucha\desktop\funciones\funcionespp.h
+	"productos.h"
+
+1525948568 c:\users\laucha\desktop\funciones\productos.h
+	"Funcionespp.h"
+
