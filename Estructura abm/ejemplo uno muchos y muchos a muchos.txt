@@ -64,6 +64,7 @@ float masBarato(producto lista[], int tam)
 	
 	if (masbarato == -1) //si se cumple no existen productos activos en el array
 	{
+          printf("No hay productos en el sistema todavia");
 	  masbarato = -1;
 	}
 
@@ -83,7 +84,7 @@ float promedioPrecio(producto lista[],int tam)
     int i;
     float preciototal = 0;
     int productosactivos =0;
-    int preciopromedio = -1;
+    int preciopromedio = 0;
 	for (i=0;i<tam;i++)
 	{
 	  if(lista[i].estado == 1)
@@ -96,6 +97,7 @@ float promedioPrecio(producto lista[],int tam)
 	
 	if (productosactivos == 0) //si se cumple no existen productos activos en el array
 	{
+	  printf("No hay productos en el sistema todavia");
 	  preciopromedio = -1;
 	}else
 	{
@@ -105,8 +107,37 @@ float promedioPrecio(producto lista[],int tam)
 	return preciopromedio;
 }
 
-
-
-
-
-
+void ordenarPorDescripcion(eProducto listado[],int tam)
+{
+    eProducto auxProducto;
+    int i,j;
+    for(i=0; i < clientes - 1; i++)
+    {
+        if(listado[i].estado == 0)
+        {
+            continue;
+        }
+        for(j=i+1; j < clientes; j++)
+        {
+            if(listado[j].estado == 0)
+            {
+                continue;
+            }
+            if(strcmp(listado[j].descripcion,listado[i].descripcion) > 0)
+            {
+                auxProducto = listado[j];
+                listado[j] = listado[i];
+                listado[i] = auxProducto;
+            }
+            else if (strcmp(listado[j].descripcion,listado[i].descripcion) == 0)
+            {
+                if (listado[i].cant > listado[j].cant)
+                {
+                    auxProducto = listado[j];
+                    listado[j] = listado[i];
+                    listado[i] = auxProducto;
+                }
+            }
+        }
+    }
+}
