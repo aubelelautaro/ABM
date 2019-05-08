@@ -68,3 +68,74 @@
 1557281519 c:\users\laucha\downloads\abm-master\abmsocios\prestamos.h
 	"socio.h"
 
+1557299368 source:c:\users\alumno\downloads\abm-master\abmsocios\autores.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"funciones.h"
+	"autores.h"
+	"libros.h"
+
+1557299368 c:\users\alumno\downloads\abm-master\abmsocios\funciones.h
+
+1557299368 c:\users\alumno\downloads\abm-master\abmsocios\autores.h
+
+1557299368 c:\users\alumno\downloads\abm-master\abmsocios\libros.h
+	"autores.h"
+
+1557299368 source:c:\users\alumno\downloads\abm-master\abmsocios\funciones.c
+	<stdio.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"funciones.h"
+
+1557329090 source:c:\users\alumno\downloads\abm-master\abmsocios\libros.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"funciones.h"
+	"libros.h"
+	"socio.h"
+	"prestamos.h"
+	"autores.h"
+
+1557329767 source:c:\users\alumno\downloads\abm-master\abmsocios\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"funciones.h"
+	"socio.h"
+	"autores.h"
+	"libros.h"
+	"prestamos.h"
+
+1557299368 c:\users\alumno\downloads\abm-master\abmsocios\socio.h
+
+1557321883 c:\users\alumno\downloads\abm-master\abmsocios\prestamos.h
+	"socio.h"
+
+1557329973 source:c:\users\alumno\downloads\abm-master\abmsocios\socio.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"funciones.h"
+	"libros.h"
+	"prestamos.h"
+	"autores.h"
+	"socio.h"
+
+1557322491 source:c:\users\alumno\downloads\abm-master\abmsocios\prestamos.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+	"libros.h"
+	"prestamos.h"
+

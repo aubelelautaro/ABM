@@ -17,5 +17,7 @@ int ePrestamo_buscarLibre(ePrestamo[],int);
 int ePrestamo_buscar(ePrestamo[],int,int);
 int ePrestamo_siguienteId(ePrestamo [],int);
 
+int ePrestamo_totalGeneral(ePrestamo [], int );
+int ePrestamo_promedioDiario(ePrestamo [], int );
 
 #endif // PRESTAMOS_H_INCLUDED

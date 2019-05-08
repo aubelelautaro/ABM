@@ -5,6 +5,8 @@
 #include <conio.h>
 #include "funciones.h"
 #include "libros.h"
+#include "socio.h"
+#include "prestamos.h"
 #include "autores.h"
 
 void eLibro_init(eLibro libros[], int tam)
@@ -338,4 +340,89 @@ int menuLibros()
     opcion=getChar("Elija una opcion: \n",opcion);
     opcion = toupper(opcion);
     return opcion;
+}
+
+void eLibro_solicitarUnSocio(eSocio socios[], int tamSocios, eLibro libros[], int tamLibros,ePrestamo prestamos[],int tamPrestamos)
+{
+    int i,j,k;
+
+    for(i=0;i<tamLibros;i++)
+    {
+        for(j=0;j<tamPrestamos;j++)
+        {
+            if(libros[i].codigo == prestamos[j].codigoLibro)
+            {
+                for(k=0;k<tamLibros;k++)
+                {
+                    if(prestamos[j].codigoSocio == socios[k].codigo)
+                    {
+                        printf("El libro: %s fue solicitado por %s %s.\n", libros[i].titulo,socios[k].apellido , socios[k].nombre);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void eLibro_menosSolicitado(ePrestamo prestamos[], int tam,eLibro libros[], int tamLibros)
+{
+    int i;
+    int j;
+    int cantidadLibros = 0;
+    int min=0;
+    int prestamoIndex;
+
+    for(i = 0 ; i < tamLibros ; i++ )
+    {
+        if(libros[i].estado == 1)
+        {
+            for( j = 0; j < tam ; j++)
+            {
+                if(prestamos[j].estado == 1 && prestamos[j].codigoLibro == libros[i].codigo)
+                {
+                    cantidadLibros++;
+                }
+                if( cantidadLibros < min)
+                {
+                    min=cantidadLibros;
+                    prestamoIndex = i;
+                }
+            }
+        }
+    }
+    printf("LIBRO MENOS SOLICITADOS EN PRESTAMOS:\n");
+    for( i=0 ; i < tamLibros ; i++)
+    {
+        if(libros[i].estado == 1 && libros[i].codigo == prestamos[prestamoIndex].codigoLibro)
+        {
+            eLibro_mostrarUno(libros[i],tamLibros);
+        }
+    }
+}
+
+void eLibro_fechaDeterminada(eLibro libros[], int tam, ePrestamo prestamos[], int tamPrestamos)
+{
+    int contador;
+    int max;
+    int flag=0;
+    int idMax;
+    int i,j;
+
+    for (i=0;i<tam;i++)
+    {
+        contador=0;
+        for (j=0;j<tamPrestamos;j++)
+        {
+            if (libros[i].codigo==prestamos[j].codigoLibro)
+            {
+                contador++;
+                if (contador > 0 || flag==0)
+                {
+                    printf("\nCODIGO: %d TITULO: %s CODIGO AUTOR:%d FECHA DE PRESTAMO: %d/%d/%d",libros[i].codigo,libros[i].titulo,libros[i].codigoAutor,prestamos[j].fechaPrestamo);
+
+                    flag++;
+                }
+            }
+        }
+    }
 }

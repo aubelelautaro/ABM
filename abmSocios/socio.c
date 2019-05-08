@@ -30,9 +30,9 @@ void eSocio_mostrarUno(eSocio socios, int tam)
 int eSocio_mostrarTodos(eSocio socios[], int tam)
 {
     int flag =0;
-
+    int i;
     printf("CODIGO  APELLIDO\t   NOMBRE     SEXO TELEFONO \t EMAIL\tFECHA ASOCIADO\n");
-    for(int i=0; i<tam; i++)
+    for(i=0; i<tam; i++)
     {
         if(socios[i].estado == 1)
         {
@@ -50,8 +50,8 @@ int eSocio_mostrarTodos(eSocio socios[], int tam)
 int eSocio_buscarLibre(eSocio socios[],int tam)
 {
     int index = -1;
-
-    for(int i=0; i<tam; i++)
+    int i =0;
+    for(i=0; i<tam; i++)
     {
         if (socios[i].estado == 0)
         {
@@ -453,10 +453,121 @@ int menu()
     printf("E.Menu libros\n");
     printf("F.Menu autores\n");
     printf("G.Alta prestamo\n");
-    printf("H.Salir\n");
+    printf("H.Listar e Informar\n");
+    printf("I.Salir\n");
 
     opcion=getChar("Elija una opcion: \n",opcion);
     opcion = toupper(opcion);
 
     return opcion;
+}
+
+void eSocio_solicitaronUnLibro(eSocio socios[], int tamSocios, eLibro libros[], int tamLibros,ePrestamo prestamos[],int tamPrestamos)
+{
+    int i,j,k;
+
+    for(i=0;i<tamSocios;i++)
+    {
+        for(j=0;j<tamPrestamos;j++)
+        {
+            if(socios[i].codigo == prestamos[j].codigoSocio)
+            {
+                for(k=0;k<tamLibros;k++)
+                {
+                    if(prestamos[j].codigoLibro == libros[k].codigo)
+                    {
+                        printf("El socio : %s %s solicito el prestamo del libro: %s.\n", socios[i].nombre, socios[i].apellido , libros[j].titulo);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void eSocio_insertionSort(eSocio socios[], int tam)
+{
+	int i,j;
+	eSocio auxiliar;
+	for(i = 1; i < tam; i++)
+    {
+		auxiliar = socios[i];
+		j = i;
+		while(j > 0 && auxiliar.apellido > socios[j-1].apellido)
+        {
+			socios[j] = socios[j - 1];
+			j--;
+		}
+		socios[j] = auxiliar;
+	}
+}
+
+void eSocio_listarPorInsercion(eSocio socios[], int tam)
+{
+    eSocio_insertionSort(socios,tam);
+    eSocio_mostrarTodos(socios,tam);
+}
+
+void eSocio_socioConMasPrestamos(eSocio socios[], int tam, ePrestamo prestamos[], int tamPrestamos)
+{
+    int flag=0;
+    int idMax;
+    char nombre[51];
+    char apellido[51];
+    int max=0;
+    int contador=0;
+    int auxContador=0;
+    int i,j;
+    for (i=0;i<tamPrestamos;i++)
+    {
+        for (j=0;j<tam;j++)
+        {
+            if (socios[j].codigo==prestamos[i].codigoSocio)
+            {
+                contador++;
+                if (contador>max)
+                {
+                    auxContador = contador;
+                    max=socios[j].codigo;
+                    strcpy(apellido,socios[j].apellido);
+                    strcpy(nombre,socios[j].nombre);
+                    flag++;
+                }
+            }
+        }
+    }
+    if (idMax>0)
+    {
+        printf("\nEl socio con mas prestamos es %s %s y tiene %d prestamos\n", socios[max].apellido,socios[max].nombre, auxContador);
+    }
+    else
+    {
+        printf("\nNo hay nada que listar!!\n\n");
+    }
+}
+
+void eSocio_socioConAlgunPrestamo(eSocio socios[], int tam, ePrestamo prestamos[], int tamPrestamos)
+{
+    int contador;
+    int max;
+    int flag=0;
+    int idMax;
+    int i,j;
+
+    for (i=0;i<tamPrestamos;i++)
+    {
+        contador=0;
+        for (j=0;j<tam;j++)
+        {
+            if (socios[j].codigo==prestamos[i].codigoSocio)
+            {
+                contador++;
+                if (contador > 0)
+                {
+
+                    printf("\nCODIGO: %d APELLIDO: %s NOMBRE: %s FECHA DE PRESTAMO: %d/%d/%d",socios[j].codigo,socios[j].apellido,socios[j].nombre,prestamos[i].fechaPrestamo);
+                    break;
+                }
+            }
+        }
+    }
 }

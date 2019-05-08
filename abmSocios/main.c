@@ -12,13 +12,14 @@
 #define TAMSOCIOS 4
 #define TAMLIBROS 5
 #define TAMAUTORES 5
-#define TAMPRESTAMOS 5
+#define TAMPRESTAMOS 10
 
 int main()
 {
     char rta = 'S';
     char rtaLibros = 'S';
     char rtaAutores = 'S';
+    char rtaModificacion = 'S';
     char confirma;
     char confirmaLib;
     char confirmaAut;
@@ -32,7 +33,7 @@ int main()
     {1,"libroUno",2,1},
     {2,"libroDos",3,1},
     {3,"libroTres",1,1},
-    {4,"libroZuatro",5,1}
+    {4,"libroCuatro",5,1}
     ,{5,"libroCinco",4,1}};
 
     eAutor listaAut[TAMAUTORES]={
@@ -42,11 +43,16 @@ int main()
     {4,"ACC","AA",1},
     {5,"AAlol","Lopez",1}};
 
-    ePrestamo listaPrest[TAMPRESTAMOS];
+    ePrestamo listaPrest[TAMPRESTAMOS] ={
+    {1,1,6,{1,12,1999},1},
+    {2,1,4,{1,12,1999},1},
+    {1,3,1,{1,12,1999},1},
+    {2,4,1,{1,12,1999},1},
+    {3,4,6,{1,9,1979},0}};
 
     //eLibro_init(listaLibros,TAMLIBROS);
     //eAutor_init(listaAut,TAMAUTORES);
-    ePrestamo_init(listaPrest,TAMPRESTAMOS);
+    //ePrestamo_init(listaPrest,TAMPRESTAMOS);
     //eSocio_init(listaSocios,TAMSOCIOS);
 
     do
@@ -142,6 +148,64 @@ int main()
             system("pause");
             break;
         case 'H':
+            do
+            {
+                switch(menuListar())
+                {
+                case 'A':
+                    ePrestamo_listarTotalYPromedio(listaPrest,TAMPRESTAMOS);
+                    system("pause");
+                    break;
+                case 'B':
+                    ePrestamo_listarCantidadDiasNoSuperanPromedio(listaPrest,TAMPRESTAMOS);
+                    system("pause");
+                    break;
+                case 'C':
+                    eSocio_solicitaronUnLibro(listaSocios,TAMSOCIOS,listaLibros,TAMLIBROS,listaPrest,TAMPRESTAMOS);
+                    system("pause");
+                    break;
+                case 'D':
+                    eLibro_solicitarUnSocio(listaSocios,TAMSOCIOS,listaLibros,TAMLIBROS,listaPrest,TAMPRESTAMOS);
+                    system("pause");
+                    break;
+                case 'E':
+                    //eLibro_menosSolicitado(listaLibros,TAMLIBROS,listaPrest,TAMPRESTAMOS);
+                    system("pause");
+                    break;
+                case 'F':
+                    eSocio_socioConMasPrestamos(listaSocios,TAMSOCIOS,listaPrest,TAMPRESTAMOS);
+                    system("pause");
+                    break;
+                case 'G':
+                    eLibro_fechaDeterminada(listaLibros,TAMLIBROS,listaPrest,TAMPRESTAMOS);
+                    system("pause");
+                    break;
+                case 'H':
+                    eSocio_socioConAlgunPrestamo(listaSocios,TAMSOCIOS,listaPrest,TAMPRESTAMOS);
+                    system("pause");
+                    break;
+                case 'I':
+                    eLibro_listar(listaLibros,TAMLIBROS);
+                    system("pause");
+                    break;
+                case 'J':
+                    eSocio_listarPorInsercion(listaSocios,TAMSOCIOS);
+                    system("pause");
+                    break;
+                case 'K':
+                    confirmaAut=getChar("Desea salir (S/N)?: ", confirmaAut);
+                    if(toupper(confirmaAut)== 'S')
+                    {
+                        rtaModificacion = 'N';
+                    }
+                    break;
+                default:
+                    printf("Ingrese opcion correcta\n");
+                    system("pause");
+                }
+            }while(rtaModificacion == 'S');
+            break;
+        case 'I':
             confirma = getChar("Seguro desea salir del programa?: ",confirma);
             if(toupper(confirma)== 'S')
             {
