@@ -1,0 +1,70 @@
+# depslib dependency file v1.0
+1557298330 source:c:\users\laucha\downloads\abm-master\abmsocios\funciones.c
+	<stdio.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"funciones.h"
+
+1557284741 c:\users\laucha\downloads\abm-master\abmsocios\funciones.h
+
+1557297220 source:c:\users\laucha\downloads\abm-master\abmsocios\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	"funciones.h"
+	"socio.h"
+	"autores.h"
+	"libros.h"
+	"prestamos.h"
+
+1557282237 c:\users\laucha\downloads\abm-master\abmsocios\socio.h
+
+1557293966 source:c:\users\laucha\downloads\abm-master\abmsocios\socio.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"funciones.h"
+	"libros.h"
+	"prestamos.h"
+	"autores.h"
+	"socio.h"
+
+1557299079 source:c:\users\laucha\downloads\abm-master\abmsocios\autores.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"funciones.h"
+	"autores.h"
+	"libros.h"
+
+1557295332 c:\users\laucha\downloads\abm-master\abmsocios\autores.h
+
+1557299079 source:c:\users\laucha\downloads\abm-master\abmsocios\libros.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<string.h>
+	<conio.h>
+	"funciones.h"
+	"libros.h"
+	"autores.h"
+
+1557292556 c:\users\laucha\downloads\abm-master\abmsocios\libros.h
+	"autores.h"
+
+1557281519 source:c:\users\laucha\downloads\abm-master\abmsocios\prestamos.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+	"libros.h"
+	"prestamos.h"
+
+1557281519 c:\users\laucha\downloads\abm-master\abmsocios\prestamos.h
+	"socio.h"
+

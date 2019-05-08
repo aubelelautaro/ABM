@@ -5,61 +5,147 @@
 #include <string.h>
 #include "funciones.h"
 #include "socio.h"
+#include "autores.h"
+#include "libros.h"
+#include "prestamos.h"
 
-#define TAM 10
+#define TAMSOCIOS 4
 #define TAMLIBROS 5
-#define TAMAUTORES 3
+#define TAMAUTORES 5
 #define TAMPRESTAMOS 5
+
 int main()
 {
-    int rta = 's';
+    char rta = 'S';
+    char rtaLibros = 'S';
+    char rtaAutores = 'S';
     char confirma;
+    char confirmaLib;
+    char confirmaAut;
 
-    eSocio lista[TAM];
-    eLibro listaL[TAMLIBROS];
-    eAutor listaAut[TAMAUTORES];
+    eSocio listaSocios[TAMSOCIOS] ={
+    {1,"AUBELE","LAUTARO",'F',"111-123","ASD@GMAIL.COM",{1,12,1999},1},
+    {4,"AUBELE","FEDERICO",'M',"415-123","BBB@GMAIL.COM",{4,6,1949},1},
+    {6,"AUBELE","EANDREA",'F',"711-823","CCC@GMAIL.COM",{7,9,1979},1}};
+
+    eLibro listaLibros[TAMLIBROS]={
+    {1,"libroUno",2,1},
+    {2,"libroDos",3,1},
+    {3,"libroTres",1,1},
+    {4,"libroZuatro",5,1}
+    ,{5,"libroCinco",4,1}};
+
+    eAutor listaAut[TAMAUTORES]={
+    {1,"Juan","Lopez",1},
+    {2,"Agustin","Lopez",1},
+    {3,"BBB","AAA",1},
+    {4,"ACC","AA",1},
+    {5,"AAlol","Lopez",1}};
+
     ePrestamo listaPrest[TAMPRESTAMOS];
 
-    initLibros(listaL,TAMLIBROS);
-    initAutores(listaAut,TAMAUTORES);
+    //eLibro_init(listaLibros,TAMLIBROS);
+    //eAutor_init(listaAut,TAMAUTORES);
+    ePrestamo_init(listaPrest,TAMPRESTAMOS);
+    //eSocio_init(listaSocios,TAMSOCIOS);
+
     do
     {
         switch(menu())
         {
         case 'A':
-            altaSocio(lista,TAM);
+            eSocio_alta(listaSocios,TAMSOCIOS);
             system("pause");
             break;
         case 'B':
-            modificarCampo(lista,TAM);
+            eSocio_modificarCampo(listaSocios,TAMSOCIOS);
+            system("pause");
             break;
         case 'C':
-            bajaSocio(lista,TAM);
+            eSocio_baja(listaSocios,TAMSOCIOS);
             system("pause");
             break;
         case 'D':
-            listarSocios(lista,TAM);
+            eSocio_listar(listaSocios,TAMSOCIOS);
             system("pause");
             break;
         case 'E':
-            listarLibros(listaL,TAMLIBROS);
+            do
+            {
+                switch(menuLibros())
+                {
+                case 'A':
+                    eLibro_alta(listaLibros,TAMLIBROS,listaAut,TAMAUTORES);
+                    system("pause");
+                    break;
+                case 'B':
+                    eLibro_modificarCampo(listaLibros,TAMLIBROS,listaAut,TAMAUTORES);
+                    system("pause");
+                    break;
+                case 'C':
+                    eLibro_baja(listaLibros,TAMLIBROS);
+                    system("pause");
+                    break;
+                case 'D':
+                    eLibro_listar(listaLibros,TAMLIBROS);
+                    system("pause");
+                    break;
+                case 'E':
+                    confirmaLib=getChar("Desea salir (S/N)?: ", confirmaLib);
+                    if(toupper(confirmaLib)== 'S')
+                    {
+                        rtaLibros = 'N';
+                    }
+                default:
+                    printf("Ingrese opcion correcta\n");
+                    system("pause");
+                }
+            }while(rtaLibros == 'S');
             system("pause");
             break;
         case 'F':
-            listarAutores(listaAut,TAMAUTORES);
-            system("pause");
+            do
+            {
+                switch(menuAutores())
+                {
+                case 'A':
+                    eAutor_alta(listaAut,TAMAUTORES);
+                    system("pause");
+                    break;
+                case 'B':
+                    eAutor_modificacion(listaAut,TAMAUTORES);
+                    system("pause");
+                    break;
+                case 'C':
+                    eAutor_baja(listaAut,TAMAUTORES);
+                    system("pause");
+                    break;
+                case 'D':
+                    eAutor_listar(listaAut,TAMAUTORES);
+                    system("pause");
+                    break;
+                case 'E':
+                    confirmaAut=getChar("Desea salir (S/N)?: ", confirmaAut);
+                    if(toupper(confirmaAut)== 'S')
+                    {
+                        rtaAutores = 'N';
+                    }
+                    break;
+                default:
+                    printf("Ingrese opcion correcta\n");
+                    system("pause");
+                }
+            }while(rtaAutores == 'S');
             break;
         case 'G':
-            altaPrestamo(listaPrest,TAMPRESTAMOS);
+            ePrestamo_alta(listaPrest,TAMPRESTAMOS,listaSocios,TAMSOCIOS,listaLibros,TAMLIBROS);
             system("pause");
             break;
         case 'H':
-            printf("Seguro desea salir? s/n \n");
-            fflush(stdin);
-            confirma = getch();
-            if(tolower(confirma)== 's')
+            confirma = getChar("Seguro desea salir del programa?: ",confirma);
+            if(toupper(confirma)== 'S')
             {
-                rta = 'n';
+                rta = 'N';
             }
             break;
         default:
@@ -67,166 +153,7 @@ int main()
             system("pause");
         }
 
-    }while(rta == 's');
+    }while(rta == 'S');
 
     return 0;
-}
-
-int menu()
-{
-    char opcion = '.';
-
-    system("cls");
-    printf("A.Alta\n");
-    printf("B.Modificar\n");
-    printf("C.Baja\n");
-    printf("D.Listar socios por Apellido\n");
-    printf("E.Listar libros\n");
-    printf("F.Listar autores\n");
-    printf("G.Alta prestamo\n");
-    printf("H.Salir\n");
-
-    opcion=getChar("Elija una opcion: ",opcion);
-    opcion = toupper(opcion);
-
-    return opcion;
-}
-
-void modificarCampo(eSocio socios[], int tam)
-{
-    int codigo;
-    int index;
-    char auxApellido[31];
-    int auxNombre[31];
-    char auxSexo;
-    char auxTelefono[16];
-    char auxMail[31];
-
-    char confirma='n';
-
-    printf("Ingrese codigo del socio a modificar:\n");
-    scanf("%d",&codigo);
-
-    index = buscarSocio(socios,tam,codigo);
-
-    if(index==-1)
-    {
-        printf("No se encontro el socio");
-    }
-    else
-    {
-        do{
-            switch(menuModificacion())
-            {
-            case 1:
-                printf("El apellido actual es: %s\n",socios[index].apellido);
-                getStringLetras("Ingrese nuevo apellido: ",auxApellido);
-
-                printf("Desea modificarlo? s/n \n");
-                fflush(stdin);
-                confirma= getche();
-                if(tolower(confirma)== 's')
-                {
-                    strcpy(socios[index].apellido,auxApellido);
-                }
-                system("pause");
-                break;
-
-            case 2:
-                printf("El nombre actual es: %s\n",socios[index].nombre);
-                getStringLetras("Ingrese nuevo nombre: ",auxNombre);
-
-                printf("Desea modificarlo? s/n \n");
-                fflush(stdin);
-                confirma= getche();
-                if(tolower(confirma)== 's')
-                {
-                    strcpy(socios[index].nombre,auxNombre);
-                }
-                system("pause");
-                break;
-
-            case 3:
-                printf("El Sexo actual es: %c\n",socios[index].sexo);
-                getChar("Ingrese nuevo sexo (M/F): ",auxSexo);
-
-                printf("Desea modificarlo? s/n \n");
-                fflush(stdin);
-                confirma= getche();
-                if(tolower(confirma)== 's')
-                {
-                    socios[index].sexo = toupper(auxSexo);
-                }
-                system("pause");
-                break;
-
-            case 4:
-                printf("El telefono actual es: %s\n",socios[index].telefono);
-                getStringLetras("Ingrese nuevo telefono: ",auxTelefono);
-                if(!esTelefono(auxTelefono))
-                {
-                    printf("Ingrese un telefono valido\n");
-                }else
-                {
-                    printf("Desea modificarlo? s/n \n");
-                    fflush(stdin);
-                    confirma= getche();
-                    if(tolower(confirma)== 's')
-                    {
-                        strcpy(socios[index].telefono,auxTelefono);
-                    }
-                }
-                system("pause");
-                break;
-
-            case 5:
-                printf("El eMail actual es: %s\n",socios[index].eMail);
-                getStringLetras("Ingrese nuevo eMail: ",auxMail);
-                if(!esMail(auxMail))
-                {
-                    printf("Ingrese un eMail valido\n");
-                }else
-                {
-                    printf("Desea modificarlo? s/n \n");
-                    fflush(stdin);
-                    confirma= getche();
-                    if(tolower(confirma)== 's')
-                    {
-                        strcpy(socios[index].eMail,auxMail);
-                    }
-                }
-                system("pause");
-                break;
-            case 6:
-                printf("Seguro desea salir? s/n \n");
-                fflush(stdin);
-                confirma = getch();
-                if(tolower(confirma)== 's')
-                {
-                    confirma = 'n';
-                }
-                break;
-
-            default:
-                printf("Ingrese opcion correcta\n");
-                system("pause");
-            }
-        }while (confirma == 's');
-    }
-}
-
-int menuModificacion()
-{
-    int opcion = 0;
-
-    printf("Modificacion\n");
-    printf("1.Apellido\n");
-    printf("2.Nombre\n");
-    printf("2.Sexo\n");
-    printf("4.Telefono\n");
-    printf("5.eMail\n");
-    printf("6.Cancelar\n");
-
-    opcion = getInt("Ingrese Opcion:\n",opcion,1,6);
-    return opcion;
 }

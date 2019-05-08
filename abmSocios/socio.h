@@ -4,7 +4,7 @@
 typedef struct
 {
     int dia,mes,anio;
-} eFecha;
+}eFecha;
 
 typedef struct
 {
@@ -19,52 +19,21 @@ typedef struct
 
 }eSocio;
 
-typedef struct
-{
-    int codigo;
-    int codigoLibro;
-    int codigoSocio;
-    eFecha fechaPrestamo;
-
-}ePrestamo;
-
-typedef struct
-{
-    int codigo;
-    char apellido[31];
-    char nombre[31];
-
-}eAutor;
-
-typedef struct
-{
-    int codigo;
-    char titulo[51];
-    int codigoAutor;
-
-}eLibro;
-
 int menu();
+void eSocio_init(eSocio[],int);
+int eSocio_menuModificacion();
 
-int menuModificacion();
+void eSocio_mostrarUno(eSocio,int);
+int eSocio_mostrarTodos(eSocio[],int);
 
-void mostrarSocio(eSocio socios,int tam);
+void eSocio_alta(eSocio[], int);
+void eSocio_baja(eSocio[], int);
+void eSocio_modificarCampo(eSocio[], int);
 
-void mostrarSocios(eSocio socios[],int tam);
-
-int buscarLibre(eSocio socios[],int tam);
-
-int buscarSocio(eSocio socios[], int tam, int codigo);
-
-void altaSocio(eSocio socios[], int tam);
-void listarSocios(eSocio socios[],int tam);
-void bajaSocio(eSocio socios[], int tam);
-void listarLibros(eLibro libros[],int tam);
-void modificarCampo(eSocio socios[], int tam);
-void listarAutores(eAutor autores[],int tam);
-void initLibros(eLibro libros[], int tam);
-void initAutores(eAutor autores[], int tam);
-void altaPrestamo(ePrestamo prestamos[], int tam);
+int eSocio_buscarLibre(eSocio[],int);
+int eSocio_buscar(eSocio[], int, int);
+void eSocio_listar(eSocio[],int);
+void eSocio_ordenarPorApellido(eSocio[],int);
 
 #endif // EMPLEADOS_H_INCLUDED
 

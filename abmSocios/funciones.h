@@ -9,7 +9,7 @@
  * \return Devuelve el numero ingresado
  */
 
-int getInt(char mensaje[],int num,int minimo,int maximo);
+int getInt(char [],int ,int ,int );
 
 /** \brief Pide un flotante
  * \param char mensaje a mostrar
@@ -17,7 +17,9 @@ int getInt(char mensaje[],int num,int minimo,int maximo);
  * \return Devuelve el numero flotante ingresado
  */
 
-float getFloat(char mensaje[],float numero);
+char getOpcion(char [],char ,char , char);
+
+float getFloat(char [],float );
 
 /** \brief Pide un caracter
  * \param char mensaje a mostrar
@@ -25,7 +27,7 @@ float getFloat(char mensaje[],float numero);
  * \return Devuelve el char ingresado
  */
 
-char getChar(char mensaje[],char caracter);
+char getChar(char [],char );
 
 /** \brief Pide una cadena de caracteres
  * \param char mensaje a mostrar
@@ -33,7 +35,7 @@ char getChar(char mensaje[],char caracter);
  * \return void
  */
 
-void getString(char mensaje[],char cadena[]);
+void getString(char [],char []);
 
 /** \brief Pide una cadena de caracteres y lo devuelve
  * \param char mensaje a mostrar
@@ -41,7 +43,7 @@ void getString(char mensaje[],char cadena[]);
  * \return 1 si el texto contiene solo letras
  */
 
-int getStringLetras(char mensaje[],char cadena[]);
+int getStringLetras(char [],char []);
 
 /** \brief Pide una cadena de caracteres y lo devuelve
  * \param char mensaje a mostrar
@@ -49,7 +51,7 @@ int getStringLetras(char mensaje[],char cadena[]);
  * \return 1 si el texto contiene solo numeros
  */
 
-int getStringNumeros(char mensaje[],char cadena[]);
+int getStringNumeros(char [],char []);
 
 /** \brief Valida un numero entre un minimo y un maximo
  * \param int dato que se le pasa
@@ -58,14 +60,14 @@ int getStringNumeros(char mensaje[],char cadena[]);
  * \return Devuelve el numero validado entre el rango de min y max
  */
 
-int validarEntero(int dato, int minimo, int maximo, char mensaje []);
+int validarEntero(int , int , int , char  []);
 
 /** \brief Verifica si el valor recibido es numero
  * \param str Array a ser analizado
  * \return 1 si es numero, 0 si no lo es
  */
 
-int esNumerico(char str[]);
+int esNumerico(char []);
 
 /**
  * \brief Verifica si el valor recibido es numérico aceptando flotantes
@@ -73,28 +75,28 @@ int esNumerico(char str[]);
  * \return 1 si es númerico y 0 si no lo es
  */
 
-int esFlotante(char str[]);
+int esFlotante(char []);
 
 /** \brief Verifica si el valor recibido es solo letras
  * \param str Array a ser analizado
  * \return 1 si son solo letras y espacios y 0 si no lo es
  */
 
-int esSoloLetras(char str[]);
+int esSoloLetras(char []);
 
 /** \brief Verifica si el valor recibido es alfa numerico
  * \param str Array a ser analizado
  * \return 1 si contiene solo caracteres para mail y 0 si no lo es
  */
 
-int esMail(char str[]);
+int esMail(char []);
 
 /** \brief Verifica si el valor recibido es un telefono
  * \param str Array a ser analizado
  * \return 1 si contiene numeros y 0 si no lo es
  */
 
-int esTelefono(char str[]);
+int esTelefono(char []);
 
 /**
  * \brief Solicita un texto numérico al usuario y lo devuelve (acepta flotantes)
@@ -102,6 +104,19 @@ int esTelefono(char str[]);
  * \param input Array donde se cargará el texto ingresado
  * \return 1 si el texto contiene solo números
  */
-int getStringNumerosFlotantes(char mensaje[],char input[]);
+int getStringNumerosFlotantes(char [],char []);
 
+/** \brief Pide una cadena de caracteres y lo devuelve
+ * \param char mensaje a mostrar
+ * \param char cadena que se ingresa
+ * \return 1 si el texto contiene numeros y guion xxxx-xxxx y 0 si no
+ */
+int getStringTelefono(char [],char []);
+
+/** \brief Pide una cadena de caracteres y lo devuelve
+ * \param char mensaje a mostrar
+ * \param char cadena que se ingresa
+ * \return 1 si el texto contiene @ y letras,numeros 0 si no
+ */
+int getStringMail(char [],char []);
 #endif // FUNCIONES_H_INCLUDED

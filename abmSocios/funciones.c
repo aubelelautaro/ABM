@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <conio.h>
 #include <string.h>
 #include "funciones.h"
 
@@ -23,11 +24,26 @@ float getFloat(char mensaje[],float numero)
     return numero;
 }
 
+char getOpcion(char mensaje[],char caracter,char minimo, char maximo)
+{
+    printf("%s", mensaje);
+    fflush(stdin);
+    caracter = getch();
+    while(caracter < minimo && caracter > maximo)
+    {
+        printf("\nIngrese una opcion correcta entre %c y %c:",minimo,maximo);
+        caracter = getch();
+        fflush(stdin);
+    }
+
+    return caracter;
+}
+
 char getChar(char mensaje[],char caracter)
 {
     printf("%s", mensaje);
     fflush(stdin);
-    scanf("%c", &caracter);
+    caracter = getch();
 
     return caracter;
 }
@@ -43,19 +59,19 @@ int validarEntero(int dato, int min, int max, char mensaje [])
     return dato;
 }
 
-
 int esNumerico(char str[])
 {
     int i=0;
     int flag = 1;
 
-    while(str[i] != '\0')
+    for(i=0;i<strlen(str);i++)
     {
-        if(str[i] < '0' || str[i]>'9')
+        if(!(isdigit(str[i])))
         {
             flag = 0;
+            printf("Error! Ingrese solo numeros\n");
+            break;
         }
-        i++;
     }
 
     return flag;
@@ -66,13 +82,13 @@ int esSoloLetras(char str[])
     int i=0;
     int flag = 1;
 
-    while(str[i] != '\0')
+    for(i=0;i<strlen(str);i++)
     {
-        if((str[i] != ' ') && (str[i]<'a' || str[i]> 'z') &&(str[i]<'A' || str[i]> 'Z'))
+        if((str[i] != ' ') && !(isalpha(str[i])))
         {
             flag = 0;
+            break;
         }
-        i++;
     }
 
     return flag;
@@ -82,14 +98,23 @@ int esMail(char str[])
 {
     int i=0;
     int flag = 1;
+    int contadorDeArrobas=0;
 
-    while(str[i] != '\0')
+    for(i=0;i<strlen(str);i++)
     {
-        if((str[i] != '@') && (str[i] != '.') && (str[i]<'a' || str[i]> 'z') &&(str[i]<'A' || str[i]> 'Z') && (str[i] < '0' || str[i]>'9'))
+        if((str[i] != '@') && (str[i] != '.') && !(isalpha(str[i])) && !(isdigit(str[i])))
         {
             flag = 0;
+            break;
         }
-        i++;
+        if(str[i] == '@')
+        {
+            contadorDeArrobas++;
+        }
+    }
+    if(contadorDeArrobas != 1)
+    {
+        flag = 0;
     }
 
     return flag;
@@ -128,28 +153,33 @@ int esTelefono(char str[])
 {
     int i=0;
     int contadorGuiones=0;
-    int flag =1;
+    int flag =0;
 
-    while(str[i] != '\0')
+    for(i=0;i<strlen(str);i++)
     {
-        if((str[i] != ' ') && (str[i] != '-') && (str[i] < '0' || str[i]>'9'))
+        if((str[i] != '-') && !(isdigit(str[i])))
         {
             flag = 0;
+            break;
         }
         if(str[i] == '-')
         {
             contadorGuiones++;
+            if(contadorGuiones ==1)
+            {
+                flag = 1;
+            }
         }
-        i++;
     }
-
     return flag;
 }
 
 void getString(char mensaje[], char cadena[])
 {
     printf(mensaje);
-    scanf("%s",cadena);
+    fflush(stdin);
+    gets(cadena);
+    fflush(stdin);
 }
 
 int getStringLetras(char mensaje[],char cadena[])
@@ -171,6 +201,32 @@ int getStringNumeros(char mensaje[],char cadena[])
     int flag =0;
     getString(mensaje,aux);
     if(esNumerico(aux))
+    {
+        strcpy(cadena,aux);
+        flag=1;
+    }
+    return flag;
+}
+
+int getStringTelefono(char mensaje[],char cadena[])
+{
+    char aux[256];
+    int flag =0;
+    getString(mensaje,aux);
+    if(esTelefono(aux))
+    {
+        strcpy(cadena,aux);
+        flag=1;
+    }
+    return flag;
+}
+
+int getStringMail(char mensaje[],char cadena[])
+{
+    char aux[256];
+    int flag =0;
+    getString(mensaje,aux);
+    if(esMail(aux))
     {
         strcpy(cadena,aux);
         flag=1;

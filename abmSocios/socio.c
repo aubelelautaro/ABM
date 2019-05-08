@@ -3,86 +3,73 @@
 #include <string.h>
 #include <conio.h>
 #include "funciones.h"
+#include "libros.h"
+#include "prestamos.h"
+#include "autores.h"
 #include "socio.h"
 
-void initLibros(eLibro libros[], int tam)
+void eSocio_init(eSocio socios[], int tam)
 {
     int i;
-    eLibro lib[]={{1,"libroUno",2},{2,"libroDos",3},{3,"libroTres",1},{4,"libroCuatro",5},{5,"libroCinco",4}};
     for(i=0;i<tam;i++)
     {
-        libros[i].codigo = lib[i].codigo;
-        strcpy(libros[i].titulo, lib[i].titulo);
-        libros[i].codigoAutor = lib[i].codigoAutor;
+        socios[i].codigo = 0;
+        socios[i].estado = 0;
     }
 }
 
-void initAutores(eAutor autores[], int tam)
+
+void eSocio_mostrarUno(eSocio socios, int tam)
 {
-    int i;
-    eAutor aut[]={{1,"AAA","AAA"},{2,"DDD","DDD"},{3,"BBB","BBB"},{4,"CCC","CCC"},{5,"DDD","DDD"}};
-    for(i=0;i<tam;i++)
+    if(socios.estado == 1)
     {
-        autores[i].codigo = aut[i].codigo;
-        strcpy(autores[i].nombre, aut[i].nombre);
-        strcpy(autores[i].apellido, aut[i].apellido);
+        printf("%d  %s %s  %c   %s    %s  %d/%d/%d\n",socios.codigo,socios.apellido,socios.nombre,socios.sexo,socios.telefono,socios.eMail,socios.fechaAsociado.dia,socios.fechaAsociado.mes,socios.fechaAsociado.anio);
     }
 }
 
-void mostrarSocio(eSocio socios, int tam)
-{
-    if(socios.estado ==1 )
-    {
-        printf("%d  %5s %5s  %c   %s    %s  %d/%d/%d\n",socios.codigo,socios.apellido,socios.nombre,socios.sexo,socios.telefono,socios.eMail,socios.fechaAsociado);
-    }
-}
-
-void mostrarSocios(eSocio socios[], int tam)
+int eSocio_mostrarTodos(eSocio socios[], int tam)
 {
     int flag =0;
 
-    printf("CODIGO DE SOCIO  APELLIDO\t  NOMBRE  SEXO\t  TELEFONO \t  EMAIL \t FECHA ASOCIADO\n");
+    printf("CODIGO  APELLIDO\t   NOMBRE     SEXO TELEFONO \t EMAIL\tFECHA ASOCIADO\n");
     for(int i=0; i<tam; i++)
     {
         if(socios[i].estado == 1)
         {
-            mostrarSocio(socios[i],tam);
+            eSocio_mostrarUno(socios[i],tam);
             flag =1;
         }
     }
     if(flag ==0)
     {
-        printf("NO HAY DATOS QUE MOSTRAR\n");
+        printf("NO HAY SOCIOS");
     }
+    return flag;
 }
 
-int buscarLibre(eSocio socios[],int tam)
+int eSocio_buscarLibre(eSocio socios[],int tam)
 {
     int index = -1;
 
-    if(tam > 0 && socios != NULL)
+    for(int i=0; i<tam; i++)
     {
-        index = -2;
-        for(int i=0; i<tam; i++)
+        if (socios[i].estado == 0)
         {
-            if (socios[i].estado == 0)
-            {
-                index = i;
-                break;
-            }
+            index = i;
+            break;
         }
     }
     return index;
 }
 
-int buscarSocio(eSocio socios[], int tam, int codigo)
+int eSocio_buscar(eSocio socios[], int tam, int codigo)
 {
     int index = -1;
     int i;
 
     for(i=0; i<tam; i++)
     {
-        if(socios[i].codigo == codigo)
+        if(socios[i].codigo == codigo && socios[i].estado ==1)
         {
             index=i;
             break;
@@ -92,17 +79,35 @@ int buscarSocio(eSocio socios[], int tam, int codigo)
     return index;
 }
 
-void altaSocio(eSocio socios[], int tam)
+int eSocio_siguienteId(eSocio socios[],int tam)
+{
+    int retorno = 0;
+    int i;
+
+        for(i=0; i<tam; i++)
+        {
+            if(socios[i].codigo>retorno)
+            {
+                 retorno=socios[i].codigo;
+            }
+        }
+
+    return retorno+1;
+}
+
+void eSocio_alta(eSocio socios[], int tam)
 {
     int index;
-    int auxCodigo=0;
+    int auxCodigo;
+    int validar,dia,mes,anio;
+    char auxDia[3],auxMes[3],auxAnio[5];
     char auxNombre[31];
     char auxApellido[31];
     char auxSexo;
     char auxTelefono[16];
     char auxMail[31];
 
-    index = buscarLibre(socios, tam);
+    index = eSocio_buscarLibre(socios, tam);
 
     if(index == -1)
     {
@@ -110,218 +115,348 @@ void altaSocio(eSocio socios[], int tam)
     }
     else
     {
-        socios[index].codigo = auxCodigo+1;
+        auxCodigo = eSocio_siguienteId(socios,tam);
+        printf("Codigo de socio: %d\n",auxCodigo);
 
-        if (!getStringLetras("Ingrese apellido: ",auxApellido))
+        validar = getStringLetras("Ingrese apellido: ",auxApellido);
+        while(validar == 0)
         {
-            printf ("El apellido debe estar compuesto solo por letras\n");
+            validar = getStringLetras("ERROR, ingrese solo letras: ",auxApellido);
         }
-        if (!getStringLetras("Ingrese el nombre: ",auxNombre))
+        strcpy(socios[index].apellido,auxApellido);
+
+        validar = getStringLetras("Ingrese nombre: ",auxNombre);
+        while(validar == 0)
         {
-            printf ("El nombre debe estar compuesta solo por letras\n");
+            validar = getStringLetras("ERROR, ingrese solo letras: ",auxNombre);
         }
+        strcpy(socios[index].nombre,auxNombre);
 
-        getChar("Ingrese sexo (M/F): ",auxSexo);
+        auxSexo = getChar("Ingrese sexo (M/F):", auxSexo);
+        auxSexo = toupper(auxSexo);
+        while((auxSexo!= 'F') && (auxSexo!= 'M'))
+        {
+            auxSexo = getChar("\nError, ingrese F o M solamente",auxSexo);
+            auxSexo = toupper(auxSexo);
+        }
+        socios[index].sexo = auxSexo;
 
-        getStringLetras("Ingrese telefono: ",auxTelefono);
+        getStringTelefono("\nIngrese telefono: ",auxTelefono);
         while(!esTelefono(auxTelefono))
         {
-            printf("Ingrese un telefono valido (1234-5678)\n");
+            printf("Ingrese un telefono valido (1234-5678): ");
             fflush(stdin);
             gets(auxTelefono);
         }
-        getStringLetras("Ingrese mail: ",auxMail);
-        if(!esMail(auxMail))
+        strcpy(socios[index].telefono,auxTelefono);
+
+        getStringMail("Ingrese mail: ",auxMail);
+        while(!esMail(auxMail))
         {
-            printf("Ingrese un mail valido\n");
+            printf("Ingrese un mail valido (asd.123@xxxxx.com) :");
             fflush(stdin);
             gets(auxMail);
         }
-
-        printf("Fecha de asociado\nDia:");
-        scanf("%d",&socios[index].fechaAsociado.dia);
-        if(socios[index].fechaAsociado.dia > 31 || socios[index].fechaAsociado.dia < 1)
-        {
-            printf("Error, ingrese dia valido");
-        }
-
-        printf("Mes:");
-        scanf("%d",&socios[index].fechaAsociado.mes);
-        if(socios[index].fechaAsociado.mes > 12 || socios[index].fechaAsociado.mes < 1)
-        {
-            printf("Error, ingrese mes valido");
-        }
-
-        printf("Anio:");
-        scanf("%d",&socios[index].fechaAsociado.anio);
-        if(socios[index].fechaAsociado.anio > 2019 || socios[index].fechaAsociado.anio < 1850)
-        {
-            printf("Error, ingrese anio valido");
-        }
-
-        strcpy(socios[index].apellido,auxApellido);
-        strcpy(socios[index].nombre,auxNombre);
-        strcpy(socios[index].telefono,auxTelefono);
         strcpy(socios[index].eMail,auxMail);
-        socios[index].sexo = toupper(socios[index].sexo);
-        socios[index].estado = 1;
 
-        printf("Alta socios exitosa\n\n");
+        do
+        {
+            getStringNumeros("Ingrese dia entre 1 y 31: ",auxDia);
+            dia =atoi(auxDia);
+        }while(dia>31 || dia <1);
+        socios[index].fechaAsociado.dia = dia;
+
+        do
+        {
+            getStringNumeros("Ingrese mes entre 1 y 12: ",auxMes);
+            mes =atoi(auxMes);
+        }while(mes>12 || mes <1);
+        socios[index].fechaAsociado.mes = mes;
+
+        do
+        {
+            getStringNumeros("Ingrese anio entre 1900 y 2020: ",auxAnio);
+            anio =atoi(auxAnio);
+        }while(anio>2020 || anio <1900);
+        socios[index].fechaAsociado.anio = anio;
+        socios[index].estado = 1;
+        socios[index].codigo = auxCodigo;
+        auxCodigo++;
+        printf("ALTA EXITOSA!\n\n");
     }
 }
 
-void bajaSocio(eSocio socios[], int tam)
+void eSocio_baja(eSocio socios[], int tam)
 {
     int index;
     int codigo;
     char confirma;
-
-    printf("Ingrese codigo: ");
-    scanf("%d", &codigo);
-    index = buscarSocio(socios,tam,codigo);
-
-    if(index== -1)
+    int retorno = eSocio_mostrarTodos(socios,tam);
+    if(retorno==0)
     {
-        printf("No se encontro al socios\n");
+        printf(" PARA DAR DE BAJA\n");
     }
     else
     {
-        printf("Desea dar de baja al socios?\n");
-        fflush(stdin);
-        confirma = getch();
+        printf("Ingrese codigo: ");
+        scanf("%d", &codigo);
+        index = eSocio_buscar(socios,tam,codigo);
 
-        if(tolower(confirma)=='s')
+        if(index== -1)
         {
-            socios[index].estado =0;
-            printf("Baja exitosa\n");
+            printf("No se encontro al socio\n");
         }
         else
         {
-            printf("No se dio de baja al socios\n");
+            confirma = getChar("Desea dar de baja el socio? (S/N): ", confirma);
+            confirma = toupper(confirma);
+            while((confirma!= 'S') && (confirma!= 'N'))
+            {
+                confirma = getChar("\nError, ingrese S o N solamente: ",confirma);
+                confirma = toupper(confirma);
+            }
+            if(confirma=='S')
+            {
+                socios[index].estado =0;
+                printf("Baja exitosa!\n");
+            }
+            else
+            {
+                printf("No se dio de baja al socio.\n");
+            }
         }
     }
 }
 
-void listarSocios(eSocio socios[],int tam)
+void eSocio_listar(eSocio socios[],int tam)
+{
+    eSocio_ordenarPorApellido(socios,tam);
+    eSocio_mostrarTodos(socios,tam);
+}
+
+void eSocio_ordenarPorApellido(eSocio socios[],int tam)
 {
     int i,j;
     eSocio aux;
 
-     printf("\n****** LISTADO DE SOCIOS POR APELLIDO ******\n\n");
     for(i=0;i<tam-1;i++)
     {
-        if(socios[i].estado == 1)
-        {
-            continue;
-        }
+
         for(j=i+1;j<tam;j++)
         {
-            if(socios[j].estado == 1)
+            if(strcmp(socios[j].apellido,socios[i].apellido)>0)
             {
-                continue;
+                aux = socios[j];
+                socios[j]= socios[i];
+                socios[i]= aux;
             }
-            if(strcmp(socios[i].apellido,socios[j].apellido)>0)
+            else if(strcmp(socios[i].apellido,socios[j].apellido) == 0)
             {
-                aux = socios[i];
-                socios[i]= socios[j];
-                socios[j]= aux;
-                mostrarSocio(socios[i],tam);
+                if(strcmp(socios[i].nombre,socios[j].nombre)>0)
+                {
+                    aux = socios[j];
+                    socios[j]= socios[i];
+                    socios[i]= aux;
+                }
             }
         }
     }
 }
 
-void listarLibros(eLibro libros[],int tam)
+int eSocio_menuModificacion()
 {
-    int i,j;
-    eLibro aux;
+    char opcion = '0';
 
-    printf("\n****** LISTADO DE LIBROS POR TITULO ******\n\n");
-    for(i=0;i<tam-1;i++)
-    {
-        for(j=i+1;j<tam;j++)
-        {
-            if(strcmp(libros[i].titulo,libros[j].titulo)>0)
-            {
-                aux = libros[i];
-                libros[i]= libros[j];
-                libros[j]= aux;
+    printf("\n----Modificacion----\n");
+    printf("1.Apellido\n");
+    printf("2.Nombre\n");
+    printf("3.Sexo\n");
+    printf("4.Telefono\n");
+    printf("5.eMail\n");
+    printf("6.Cancelar\n");
 
-                printf("%d   %s    %d", libros[i].codigo , libros[i].titulo , libros[i].codigoAutor);
-            }
-        }
-    }
+    opcion = getOpcion("\nIngrese opcion entre 1 y 6: ", opcion,'1','6');
+    return opcion;
 }
 
-void listarAutores(eAutor autores[],int tam)
+void eSocio_modificarCampo(eSocio socios[], int tam)
 {
-    int i,j;
-    eAutor aux;
-
-     printf("\n****** LISTADO DE AUTORES POR APELLIDO ******\n\n");
-    for(i=0;i<tam-1;i++)
-    {
-        for(j=i+1;j<tam;j++)
-        {
-            if(strcmp(autores[i].apellido,autores[j].apellido)>0)
-            {
-                aux = autores[i];
-                autores[i]= autores[j];
-                autores[j]= aux;
-
-                printf("%d   %s    %s", autores[i].codigo , autores[i].nombre , autores[i].apellido);
-            }
-        }
-    }
-}
-
-void altaPrestamo(ePrestamo prestamos[], int tam)
-{
+    int codigo;
     int index;
-    int auxCodigo=0;
-    int auxCodigoLibro,auxCodigoSocio;
-    char auxCodigoLibroStr[15];
-    char auxCodigoSocioStr[15];
-    char confirma = 'n';
-
-    printf("Seguro quiere dar de alta un prestamo? (s/n)");
-    fflush(stdin);
-    confirma = getche();
-    if(tolower(confirma)=='s')
+    int validar;
+    char auxApellido[31];
+    char auxNombre[31];
+    char auxSexo;
+    char auxTelefono[16];
+    char auxMail[31];
+    int retorno = eSocio_mostrarTodos(socios,tam);
+    char confirma='N';
+    if(retorno==0)
     {
-        prestamos[index].codigo = auxCodigo+1;
+        printf(" PARA MODIFICAR");
+    }else
+    {
+        printf("Ingrese codigo del socio a modificar: ");
+        scanf("%d",&codigo);
+        index = eSocio_buscar(socios,tam,codigo);
+        if(index==-1)
+        {
+            printf("No se encontro el socio\n");
+        }else{
+            do{
+                switch(eSocio_menuModificacion())
+                {
+                case '1':
+                    printf("El apellido actual es: %s\n",socios[index].apellido);
+                    validar = getStringLetras("Ingrese nuevo apellido: ",auxApellido);
+                    while(validar == 0)
+                    {
+                        validar = getStringLetras("ERROR, ingrese solo letras: ",auxApellido);
+                    }
+
+                    confirma = getChar("Seguro quiere modificarlo? (N/S):", confirma);
+                    confirma = toupper(confirma);
+                    while((confirma!= 'S') && (confirma!= 'N'))
+                    {
+                        confirma = getChar("\nError, ingrese S o N solamente: ",confirma);
+                        confirma = toupper(confirma);
+                    }
+                    if(confirma == 'S')
+                    {
+                        strcpy(socios[index].apellido,auxApellido);
+                    }
+                    system("pause");
+                    break;
+
+                case '2':
+                    printf("El nombre actual es: %s\n",socios[index].nombre);
+                    validar = getStringLetras("Ingrese nuevo nombre: ",auxNombre);
+                    while(validar == 0)
+                    {
+                        validar = getStringLetras("ERROR, ingrese solo letras: ",auxNombre);
+                    }
+
+                    confirma = getChar("Seguro quiere modificarlo? (N/S):", confirma);
+                    confirma = toupper(confirma);
+                    while((confirma!= 'S') && (confirma!= 'N'))
+                    {
+                        confirma = getChar("\nError, ingrese S o N solamente: ",confirma);
+                        confirma = toupper(confirma);
+                    }
+                    if(confirma == 'S')
+                    {
+                        strcpy(socios[index].nombre,auxNombre);
+                    }
+                    system("pause");
+                    break;
+
+                case '3':
+                    printf("El Sexo actual es: %c\n",socios[index].sexo);
+
+                    auxSexo = getChar("Ingrese sexo (M/F):", auxSexo);
+                    auxSexo = toupper(auxSexo);
+                    while((auxSexo!= 'F') && (auxSexo!= 'M'))
+                    {
+                        auxSexo = getChar("\nError, ingrese F o M solamente: ",auxSexo);
+                        auxSexo = toupper(auxSexo);
+                    }
+
+                    confirma = getChar("Seguro quiere modificarlo? (N/S):", confirma);
+                    confirma = toupper(confirma);
+                    while((confirma!= 'S') && (confirma!= 'N'))
+                    {
+                        confirma = getChar("\nError, ingrese S o N solamente: ",confirma);
+                        confirma = toupper(confirma);
+                    }
+                    if(confirma == 'S')
+                    {
+                       socios[index].sexo = auxSexo;
+                    }
+                    system("pause");
+                    break;
+
+                case '4':
+                    printf("El telefono actual es: %s\n",socios[index].telefono);
+                    validar = getStringTelefono("Ingrese nuevo telefono: ",auxTelefono);
+                    while(validar == 0)
+                    {
+                        validar = getStringTelefono("ERROR, ingrese solo Telefono (4xxx-xxxx): ",auxTelefono);
+                    }
+
+                    confirma = getChar("\nSeguro quiere modificarlo? (N/S):", confirma);
+                    confirma = toupper(confirma);
+                    while((confirma!= 'S') && (confirma!= 'N'))
+                    {
+                        confirma = getChar("Error, ingrese S o N solamente: ",confirma);
+                        confirma = toupper(confirma);
+                    }
+                    if(confirma == 'S')
+                    {
+                        strcpy(socios[index].telefono,auxTelefono);
+                    }
+                    system("pause");
+                    break;
+
+                case '5':
+                    printf("El eMail actual es: %s\n",socios[index].eMail);
+                    validar = getStringMail("Ingrese nuevo eMail: ",auxMail);
+                    while(validar == 0)
+                    {
+                        validar = getStringMail("ERROR, ingrese mail valido (asda@xxxx.com): ",auxMail);
+                    }
+
+                    confirma = getChar("Seguro quiere modificarlo? (N/S): ", confirma);
+                    confirma = toupper(confirma);
+                    while((confirma!= 'S') && (confirma!= 'N'))
+                    {
+                        confirma = getChar("\nError, ingrese S o N solamente: ",confirma);
+                        confirma = toupper(confirma);
+                    }
+                    if(confirma == 'S')
+                    {
+                        strcpy(socios[index].eMail,auxMail);
+                    }
+                    system("pause");
+                    break;
+                case '6':
+                    confirma = getChar("Seguro quiere salir? (N/S): ", confirma);
+                    confirma = toupper(confirma);
+                    while((confirma!= 'S') && (confirma!= 'N'))
+                    {
+                        confirma = getChar("\nError, ingrese S o N solamente: ",confirma);
+                        confirma = toupper(confirma);
+                    }
+                    if(confirma == 'S')
+                    {
+                        confirma = 'N';
+                    }
+                    break;
+
+                default:
+                    printf("Ingrese opcion correcta \n");
+                    system("pause");
+                }
+            }while (confirma == 'S');
+        }
     }
-        if(!getStringNumeros("Ingrese codigo de libro: ",auxCodigoLibro))
-        {
-            printf ("El codigo debe estar compuesto solo por numeros\n");
-        }
-        auxCodigoLibro = atoi(auxCodigoLibroStr);
+}
 
-        if(!getStringNumeros("Ingrese codigo de socio: ",auxCodigoSocio))
-        {
-            printf ("El codigo debe estar compuesto solo por numeros\n");
-        }
-        auxCodigoSocio = atoi(auxCodigoSocioStr);
+int menu()
+{
+    char opcion = '.';
 
-        printf("Fecha de prestamo\nDia:");
-        scanf("%d",&prestamos[index].fechaPrestamo.dia);
-        if(prestamos[index].fechaPrestamo.dia > 31 || prestamos[index].fechaPrestamo.dia < 1)
-        {
-            printf("Error, ingrese dia valido");
-        }
+    printf("\n----MENU----\n");
+    printf("A.Alta\n");
+    printf("B.Modificar\n");
+    printf("C.Baja\n");
+    printf("D.Listar socios por Apellido\n");
+    printf("E.Menu libros\n");
+    printf("F.Menu autores\n");
+    printf("G.Alta prestamo\n");
+    printf("H.Salir\n");
 
-        printf("Mes:");
-        scanf("%d",&prestamos[index].fechaPrestamo.mes);
-        if(prestamos[index].fechaPrestamo.mes > 12 || prestamos[index].fechaPrestamo.mes < 1)
-        {
-            printf("Error, ingrese mes valido");
-        }
+    opcion=getChar("Elija una opcion: \n",opcion);
+    opcion = toupper(opcion);
 
-        printf("Anio:");
-        scanf("%d",&prestamos[index].fechaPrestamo.anio);
-        if(prestamos[index].fechaPrestamo.anio > 2019 || prestamos[index].fechaPrestamo.anio < 1850)
-        {
-            printf("Error, ingrese anio valido");
-        }
-        printf("Alta prestamo exitosa\n\n");
+    return opcion;
 }
